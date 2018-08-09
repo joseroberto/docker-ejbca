@@ -2,6 +2,10 @@
 
 mkdir -p /etc/ejbca/
 if [ ! -f /etc/ejbca/dbinit ]; then
+	# fix the javax.xml.parsers.FactoryConfigurationError error
+	echo "Copying /opt/jboss-modules.jar ==> ${JBOSS_HOME}/jboss-modules.jar"
+	\cp /opt/jboss-modules.jar ${JBOSS_HOME}/jboss-modules.jar
+
         echo "This is the first launch - will init ssl certs, db parameters..."
     		echo "  Will use external database, from specified parameters"
     		echo "# ------------- Database configuration ------------------------" > $EJBCA_HOME/conf/database.properties

@@ -1,8 +1,8 @@
 #!/bin/sh
-docker ps -a | grep bsarda/ejbca | awk '{print $1}' | xargs -n1 docker rm -f
-docker rmi bsarda/ejbca:latest
-docker rmi bsarda/ejbca:6.3.1
+#wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.tar.gz
+#wget http://downloads.sourceforge.net/project/ejbca/ejbca6/ejbca_6_3_1_1/ejbca_ce_6_3_1_1.zip
+#mv ejbca_ce_6_3_1_1.zip ejbca_ce_6_3_1_1.tar.gz
 
-docker build -t bsarda/ejbca .
-docker tag bsarda/ejbca bsarda/ejbca:latest
-docker tag bsarda/ejbca bsarda/ejbca:6.3.1
+docker build -t jroberto/ejbca .
+docker tag jroberto/ejbca jroberto/ejbca:latest
+docker tag jroberto/ejbca jroberto/ejbca:1.0

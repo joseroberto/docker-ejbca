@@ -1,0 +1,18 @@
+{
+  "name": "docker-ejbca",
+  "version": "1.0.0",
+  "description": "docker build -t docker-ejbca .",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gulp"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cli": "^2.0.1",
+    "gulp-shell": "^0.6.5",
+    "gulp-watch": "^5.0.0",
+    "run-sequence": "^2.2.1"
+  }
+}
