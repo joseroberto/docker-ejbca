@@ -17,6 +17,7 @@ if [ ! -f /etc/ejbca/dbinit ]; then
 
         # create flag file
         touch /etc/ejbca/dbinit;
+
 else
         echo "DB Already initialized, no need to reinit"
 fi

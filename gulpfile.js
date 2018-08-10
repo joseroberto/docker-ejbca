@@ -10,7 +10,7 @@ const VER = '1.0'
 gulp.task('default', ['watch'])
 
 gulp.task('watch', () => {
-  gulp.watch(['Dockerfile','gulpfile.js','init.sh','jbossinit.sh','ejbcainit.sh' ], () => {
+  gulp.watch(['Dockerfile','gulpfile.js','init.sh','jbossinit.sh','ejbcainit.sh','dinamo.conf' ], () => {
     runSequence(
       'stop',
       'remove',
@@ -40,4 +40,12 @@ gulp.task('run',
 
 gulp.task('key',
   shell.task(`docker cp ${CONTAINER_NAME}:/superadmin.p12 .`, { ignoreErrors: false })
+)
+
+gulp.task('dropdb',
+  shell.task(`PGPASSWORD=serenaya00  psql -h localhost -U postgres -c 'drop database ejbca;' postgres`, { ignoreErrors: false })
+)
+
+gulp.task('initdb',
+  shell.task(`PGPASSWORD=serenaya00  psql -h localhost -U postgres -c 'create database ejbca with owner ejb_user;' postgres`, { ignoreErrors: false })
 )

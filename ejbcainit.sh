@@ -34,20 +34,34 @@ echo "httpsserver.hostname=$WEB_HTTP_HOSTNAME" >> $EJBCA_HOME/conf/web.propertie
 echo "httpsserver.dn=$WEB_HTTP_DN" >> $EJBCA_HOME/conf/web.properties
 echo "web.selfreg.enabled=$WEB_SELFREG" >> $EJBCA_HOME/conf/web.properties
 
+echo "----  Creating ... ----------------"
 # deploy and install ear
 cd $EJBCA_HOME
+
 # deploy
 ant deploy
+#
 rc=$?
 if [[ $rc -ne 0 ]] ; then
   echo "Error while executing ant deploy, rc=$rc"; exit $rc
 fi
+
+# compile 
+echo 'clientToolBox compiling...'
+ant clientToolBox
+rc=$?
+if [[ $rc -ne 0 ]] ; then
+  echo "Error while executing ant build clientToolBox, rc=$rc"; exit $rc
+fi
+
 # install
 ant install
 rc=$?
 if [[ $rc -ne 0 ]] ; then
   echo "Error while executing ant install, rc=$rc"; exit $rc
 fi
+
+
 
 # copy key to root fs for easy copy
 cp $EJBCA_HOME/p12/superadmin.p12 /superadmin.p12

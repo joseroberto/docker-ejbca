@@ -36,13 +36,24 @@ ENV JBOSS_HOME=/opt/jboss-as-7.1.1.Final \
 	WEB_HTTP_PASSWORD=serverpwd \
 	WEB_HTTP_HOSTNAME=localhost \
 	WEB_HTTP_DN=CN=localhost,O=Engenharia,C=BR \
-	WEB_SELFREG=true
+	WEB_SELFREG=true \
+	# pkcs11
+	DFENCE_PKCS11_IP=10.0.62.16 \
+	DFENCE_PKCS11_USER=ejbcauser \
+	DFENCE_PKCS11_ENCRYPTED=1 \
+	DFENCE_PKCS11_AUTO_RECONNECT=1 \
+	DFENCE_PKCS11_HANDLE_CACHE_TIMEOUT=1 \
+	DFENCE_LOG_PATH=/tmp/tacndlib.log \
+	DFENCE_LOG_LEVEL=3 \
+	DFENCE_LOG_FLUSH=1 \
+	DFENCE_PKCS11_LOG_PATH=/tmp/tacndp11.log 
 
 # add files
 ADD [	"jboss-as-7.1.1.Final.tar.gz", \
 	"ejbca_ce_6_3_1_1.tar.gz", \
 	"postgresql-9.1-903.jdbc4.jar", \
 	"ejbcainit.sh", \
+	"dinamo.conf", \
 	"jbossinit.sh", \
 	"dbinit.sh", \
 	"stop.sh", \
@@ -53,8 +64,9 @@ ADD [	"jboss-as-7.1.1.Final.tar.gz", \
 
 
 # install prereq
-RUN yum install -y net-tools java-1.7.0-openjdk java-1.7.0-openjdk-devel ant ant-optional && \
+RUN yum install -y which net-tools java-1.7.0-openjdk java-1.7.0-openjdk-devel ant ant-optional && \
 	groupadd ejbca && useradd ejbca -g ejbca && \
+	rpm -ivh https://hsm.dinamonetworks.com/bin/client/releases/linux/x64/dinamo-3.2.3-1.x86_64.rpm && \
 	chmod 750 /opt/init.sh && chmod 750 /opt/dbinit.sh && chmod 750 /opt/jbossinit.sh && chmod 750 /opt/ejbcainit.sh && chmod 750 /opt/stop.sh && \
 	sed -i 's/jboss.bind.address.management:127.0.0.1/jboss.bind.address.management:0.0.0.0/' $APPSRV_HOME/standalone/configuration/standalone.xml
 
