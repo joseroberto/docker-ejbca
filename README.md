@@ -61,3 +61,25 @@ The database settings are to set according to the target DB. The user must be th
 - WEB_HTTP_HOSTNAME => hostname of the http server => default 'localhost'  
 - WEB_HTTP_DN => DN of the http server => default 'CN=localhost,O=EJBCA,C=FR'  
 - WEB_SELFREG => enable self-service registration => default 'true'  
+
+
+**HSM Dinamo configure (Vide os manuais http://docs.dinamonetworks.com**
+- 	DFENCE_PKCS11_IP => IP da máquina
+-	DFENCE_PKCS11_USER => Usuário do HSM
+-	DFENCE_PKCS11_ENCRYPTED =>  Se a conexão será encriptada
+-	DFENCE_PKCS11_AUTO_RECONNECT => Se terá autoreconexão
+-	DFENCE_PKCS11_HANDLE_CACHE_TIMEOUT => Qual o tempo de armazenamento de cache
+-	HSM_LOG_PATH => Caminho para armazenamento da log do client
+-	HSM_LOG_LEVEL => Nível de log
+-	DFENCE_LOG_FLUSH=1 => Se vai ter flush
+-	DFENCE_PKCS11_LOG_PATH => Caminho da log da P11
+
+**Configure ejbcaClientToolBox**
+Na pasta `/opt/ejbca_ce_6_3_1_1/dist/clientToolBox` execute o seguinte comando para testar configuração com HSM:
+```
+./ejbcaClientToolBox.sh PKCS11HSMKeyTool test /usr/lib64/libtacndp11.so 1
+``` 
+Para gerar uma chave no HSM execute:
+``` 
+./ejbcaClientToolBox.sh PKCS11HSMKeyTool generate /usr/lib64/libtacndp11.so 2048 teste_key 1
+``` 
